@@ -32,7 +32,7 @@ mongoose.connection
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: 'aaabbbccc',
+  secret: 'aaabbbcccdddeeefff!',
   store: new MongoStore({
     url: MONGO_URI,
     autoReconnect: true
