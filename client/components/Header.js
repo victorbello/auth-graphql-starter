@@ -1,5 +1,6 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
+import { Link } from 'react-router';
 
 import query from '../queries/CurrentUser';
 
@@ -11,12 +12,27 @@ type Props = {
 class Header extends React.Component {
   props: Props;
 
+  renderButtons() {
+    const { user, isFetching } = this.props;
+
+    if(isFetching) { return <div />; }
+
+    if(user) {
+      return <div>Logout</div>;
+    } else {
+      return (
+        <div>You're not signed in</div>
+      );
+    }
+  }
+
   render() {
-    if(this.props.isFetching) { return <h3>Loading...</h3> }
     return (
-      <div>
-        Header
-      </div>
+      <nav>
+        <div className='nav-wrapper'>
+          {this.renderButtons()}
+        </div>
+      </nav>
     );
   }
 }
