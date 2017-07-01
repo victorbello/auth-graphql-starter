@@ -72,7 +72,9 @@ const withData = graphql(query, {
 });
 
 const mapActionsToProps = ({ mutate }) => ({
-  onLogout: () => mutate({})
+  onLogout: () => mutate({
+    refetchQueries: [{query}]
+  })
 });
 
 const withActions = graphql(mutation, {
