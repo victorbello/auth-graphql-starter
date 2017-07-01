@@ -1,8 +1,9 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { Link } from 'react-router';
 
 import query from '../queries/CurrentUser';
+import mutation from '../mutations/Logout';
 
 type Props = {
   user: Object,
@@ -12,13 +13,21 @@ type Props = {
 class Header extends React.Component {
   props: Props;
 
+  onLogoutClick = () => {
+    this.props.onLogout();
+  }
+
   renderButtons() {
     const { user, isFetching } = this.props;
 
     if(isFetching) { return <div />; }
 
     if(user) {
-      return <div>Logout</div>;
+      return (
+        <li>
+          <a onClick={this.onLogoutClick}>Logout</a>
+        </li>
+      );
     } else {
       return (
         <div>
@@ -62,4 +71,15 @@ const withData = graphql(query, {
   props: mapDataToProps
 });
 
-export default withData(Header);
+const mapActionsToProps = ({ mutate }) => ({
+  onLogout: () => mutate({})
+});
+
+const withActions = graphql(mutation, {
+  props: mapActionsToProps
+});
+
+export default compose(
+  withData,
+  withActions
+)(Header);
