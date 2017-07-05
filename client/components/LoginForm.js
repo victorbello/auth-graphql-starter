@@ -5,18 +5,22 @@ import AuthForm from './AuthForm';
 import mutation from '../mutations/Login';
 
 class LoginForm extends React.Component {
+  onSubmit = ({email, password}) => {
+    this.props.onLogin(email, password);
+  }
+
   render() {
     return (
       <div>
         <h3>Login</h3>
-        <AuthForm />
+        <AuthForm onSubmit={this.onSubmit} />
       </div>
     );
   }
 }
 
 const mapActionsToProps = ({ mutate }) => ({
-  onLogin: (title) => mutate ({
+  onLogin: (email, password) => mutate ({
     variables: {  },
     refetchQueries: [{  }]
   })
