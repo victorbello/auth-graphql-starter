@@ -6,6 +6,7 @@ import mutation from '../mutations/Login';
 
 class LoginForm extends React.Component {
   onSubmit = ({email, password}) => {
+    console.log(email, password);
     this.props.onLogin(email, password);
   }
 
@@ -21,8 +22,7 @@ class LoginForm extends React.Component {
 
 const mapActionsToProps = ({ mutate }) => ({
   onLogin: (email, password) => mutate ({
-    variables: {  },
-    refetchQueries: [{  }]
+    variables: { email, password }
   })
 });
 

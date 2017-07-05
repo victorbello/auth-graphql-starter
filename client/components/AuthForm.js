@@ -8,14 +8,18 @@ class AuthForm extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.onSubmit(this.state);
+    console.log(this.state);
+    this.props.onSubmit({
+      email: this.state.email,
+      password: this.state.password
+    });
   }
 
   render() {
     return (
       <div className='row'>
-        <form className='col s6'>
-          <div onSubmit={this.onSubmit} className='input-field'>
+        <form className='col s6' onSubmit={this.onSubmit}>
+          <div className='input-field'>
             <input
               name='email'
               placeholder='Email'
