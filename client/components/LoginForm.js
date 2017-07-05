@@ -9,7 +9,7 @@ class LoginForm extends React.Component {
   onSubmit = ({email, password}) => {
     this.props.onLogin(email, password)
       .catch(res => {
-        debugger;
+        const errors = res.graphQLErrors.map(error => error.message);
       });
   }
 
