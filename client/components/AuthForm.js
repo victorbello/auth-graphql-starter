@@ -8,7 +8,6 @@ class AuthForm extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
     this.props.onSubmit({
       email: this.state.email,
       password: this.state.password
