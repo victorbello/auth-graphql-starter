@@ -6,10 +6,15 @@ import mutation from '../mutations/Login';
 import query from '../queries/CurrentUser';
 
 class LoginForm extends React.Component {
+  state = {
+    errors: []
+  };
+
   onSubmit = ({email, password}) => {
     this.props.onLogin(email, password)
       .catch(res => {
         const errors = res.graphQLErrors.map(error => error.message);
+        this.setState({ errors });
       });
   }
 
@@ -17,7 +22,10 @@ class LoginForm extends React.Component {
     return (
       <div>
         <h3>Login</h3>
-        <AuthForm onSubmit={this.onSubmit} />
+        <AuthForm
+          onSubmit={this.onSubmit}
+          errors={this.state.errors}
+        />
       </div>
     );
   }
