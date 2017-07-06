@@ -1,5 +1,6 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
+import { hashHistory } from 'react-router';
 
 import AuthForm from './AuthForm';
 import mutation from '../mutations/Login';
@@ -9,6 +10,12 @@ class LoginForm extends React.Component {
   state = {
     errors: []
   };
+
+  componentWillUpdate = (nextProps) => {
+    if (!this.props.data.user && nextProps.data.user) {
+      hashHistory.push('/dashboard');
+    }
+  }
 
   onSubmit = ({email, password}) => {
     this.props.onLogin(email, password)
@@ -31,6 +38,8 @@ class LoginForm extends React.Component {
   }
 }
 
+const withData = graphql(query);
+
 const mapActionsToProps = ({ mutate }) => ({
   onLogin: (email, password) => mutate ({
     variables: { email, password },
@@ -42,4 +51,7 @@ const withActions = graphql(mutation, {
   props: mapActionsToProps
 });
 
-export default withActions(LoginForm);
+export default compose(
+  withData,
+  withActions
+)(LoginForm);
